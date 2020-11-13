@@ -125,7 +125,7 @@ public class GUI {
 		panel.add(btnNewButton_10);
 		
 		JButton btnNewButton_15 = new JButton("/");
-		panel.add(btnNewButton_15);
+		panel.add(btnNewButton_15);		
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(51, 5, 498, 231);
@@ -139,5 +139,8 @@ public class GUI {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel.setBounds(0, 176, 498, 55);
 		panel_1.add(lblNewLabel);
+		
+		//test
+		//test
 	}
 }
