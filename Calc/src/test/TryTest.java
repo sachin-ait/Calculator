@@ -78,7 +78,7 @@ public class CalculatorTest extends TestCase { //New Class for all tests
    assertEquals("2*5",cal.usin(2,*,5));
   }
 	@Test
-	public void testResult() { //User story DIS1 b acceptance criteria
+	public void testResult() { //User story DIS1 b acceptance criteria 
    assertEquals(40,cal.res("4*10"));
   }
 	
