@@ -69,4 +69,17 @@ public class CalculatorTest extends TestCase { //New Class for all tests
 	public void testDivMixNum() { //User story CAL4 c acceptance criteria
    assertEquals(-13,cal.div(-26,2));
   }
+	@Test
+	public void testOrder() { //User story CAL5 a acceptance criteria
+   assertEquals(128.230,cal.bodmas("26*5-2+3/13"));
+  }
+	@Test
+	public void testUserInput() { //User story DIS1 a acceptance criteria
+   assertEquals("2*5",cal.div(2,*,5));
+  }
+	@Test
+	public void testDivMixNum() { //User story DIS1 b acceptance criteria
+   assertEquals(40,cal.div("4*10"));
+  }
+	
 }
