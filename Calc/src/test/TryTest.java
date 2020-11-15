@@ -75,11 +75,11 @@ public class CalculatorTest extends TestCase { //New Class for all tests
   }
 	@Test
 	public void testUserInput() { //User story DIS1 a acceptance criteria
-   assertEquals("2*5",cal.div(2,*,5));
+   assertEquals("2*5",cal.usin(2,*,5));
   }
 	@Test
-	public void testDivMixNum() { //User story DIS1 b acceptance criteria
-   assertEquals(40,cal.div("4*10"));
+	public void testResult() { //User story DIS1 b acceptance criteria
+   assertEquals(40,cal.res("4*10"));
   }
 	
 }
