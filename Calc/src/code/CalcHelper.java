@@ -56,6 +56,36 @@ public class CalcHelper {
 		return arr;
 	}
 
+       // -------scientific calculator start
+       // ------- 1. user input a number( Or the result of several other calculations)  2.click sin,cos,tan,log will get a result
+    public static Double sinCal(String input) throws Exception {
+        if (!TOKEN_PATTERN.matcher(input).matches()) {
+            throw new Exception("illegal number");
+        }
+        return Math.sin(Double.parseDouble(input));
+    }
+
+    public static Double cosCal(String input) throws Exception {
+        if (!TOKEN_PATTERN.matcher(input).matches()) {
+            throw new Exception("illegal number");
+        }
+        return Math.cos(Double.parseDouble(input));
+    }
+
+    public static Double tancal(String input) throws Exception {
+        if (!TOKEN_PATTERN.matcher(input).matches()) {
+            throw new Exception("illegal number");
+        }
+        return Math.tan(Double.parseDouble(input));
+    }
+
+    public static Double logcal(String input) throws Exception {
+        if (!TOKEN_PATTERN.matcher(input).matches()) {
+            throw new Exception("illegal number");
+        }
+        return Math.log(Double.parseDouble(input));
+    }
+       // -------scientific calculator end
 	public ArrayList<String> infix_to_postfix(ArrayList<String> inputArray) {
 		ArrayList<String> out = new ArrayList<String>();
 		Stack<String> operStack = new Stack<String>();
