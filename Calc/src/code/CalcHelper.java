@@ -1,4 +1,4 @@
-package code;
+package newcal;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -23,17 +23,23 @@ public class CalcHelper {
 	static Pattern NUMERIC_PATTERN = Pattern.compile("-?\\d*\\.\\d+|-?\\d+\\.\\d*|-?\\d+");
 	static Pattern OPERATOR_PATTERN = Pattern.compile("-?\\d*\\.\\d+|-?\\d+\\.\\d*|-?\\d+|[^A-Za-z0-9\\w\\s]");
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		CalcHelper helper = new CalcHelper();
 //		ArrayList<String> tokens = helper.tokens("2+2*3+2-2*2/2");
 //		System.out.println(tokens);
 //		tokens= helper.infix_to_postfix(tokens);
 //		System.out.println(tokens);
 //		System.out.println(helper.calculatePostFix(tokens));
-		System.out.println(helper.calc("2+2*2/2"));
+//		System.out.println(helper.calc("2+2*2/2"));
+
+		System.out.println(helper.calc("cos(1011)"));
+
 	}
 
-	public double calc(String input) {
+	public double calc(String input) throws Exception {
+		Double result = scienceCal(input);
+		if (result != null) return result;
+
 		ArrayList<String> tokens = tokens(input);
 		ArrayList<String> postFix = infix_to_postfix(tokens);
 		return calculatePostFix(postFix);
@@ -56,6 +62,61 @@ public class CalcHelper {
 		return arr;
 	}
 
+	// -------scientific calculator start
+	// ------- 1. user input a number( Or the result of several other calculations)  2.click sin,cos,tan,log will get a result
+	public static Double sinCal(String input) throws Exception {
+		if (!TOKEN_PATTERN.matcher(input).matches()) {
+			throw new Exception("illegal number");
+		}
+		return Math.sin(Double.parseDouble(input));
+	}
+
+	public static Double cosCal(String input) throws Exception {
+		if (!TOKEN_PATTERN.matcher(input).matches()) {
+			throw new Exception("illegal number");
+		}
+		return Math.cos(Double.parseDouble(input));
+	}
+
+	public static Double tancal(String input) throws Exception {
+		if (!TOKEN_PATTERN.matcher(input).matches()) {
+			throw new Exception("illegal number");
+		}
+		return Math.tan(Double.parseDouble(input));
+	}
+
+	public static Double logcal(String input) throws Exception {
+		if (!TOKEN_PATTERN.matcher(input).matches()) {
+			throw new Exception("illegal number");
+		}
+		return Math.log(Double.parseDouble(input));
+	}
+	private Double scienceCal(String input) throws Exception {
+		if(input.contains("sin")){
+			String substring = getString(input);
+			Double result = sinCal(substring);
+			return result;
+		}else if (input.contains("cos")){
+			String substring = getString(input);
+			Double result = cosCal(substring);
+			return result;
+		} else if (input.contains("tan")){
+			String substring = getString(input);
+			Double result = tancal(substring);
+			return result;
+
+		} else if (input.contains("log")){
+			String substring = getString(input);
+			Double result = logcal(substring);
+			return result;
+		}
+		return null;
+	}
+
+	private String getString(String input) {
+		return input.substring(input.indexOf("(")+1, input.indexOf(")"));
+	}
+	// -------scientific calculator end
 	public ArrayList<String> infix_to_postfix(ArrayList<String> inputArray) {
 		ArrayList<String> out = new ArrayList<String>();
 		Stack<String> operStack = new Stack<String>();
