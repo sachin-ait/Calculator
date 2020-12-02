@@ -15,6 +15,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+
+import code.CalcHelper;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -35,6 +38,7 @@ public class Gui {
 					btnMulti,btnPercent,btnBack,btnClear,btnPower,btnRightBracket,btnLeftBracket,btnDivide,btnSqrt;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
+	private CalcHelper helper;
 	/**
 	 * Launch the application.
 	 */
@@ -56,6 +60,7 @@ public class Gui {
 	 */
 	public Gui() throws Exception {
 		initialize();
+		helper= new CalcHelper();
 	}
 
 	/**
@@ -315,10 +320,20 @@ public class Gui {
 		});
 		
 		JButton btnSin = new JButton("sin");
+		btnSin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				numberFunction("sin(");
+			}
+		});
 		btnSin.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		panel.add(btnSin);
 		
 		JButton btnCos = new JButton("cos");
+		btnCos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				numberFunction("cos(");
+			}
+		});
 		panel.add(btnCos);
 		btnCos.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
@@ -365,7 +380,8 @@ public class Gui {
 		 btnEqual.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnEqual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				String input= lblNewLabel.getText();
+				lblNewLabel.setText(""+helper.calc(input));
 			}
 		});
 		
@@ -379,6 +395,11 @@ public class Gui {
 		panel.add(btnPercent);		
 		
 		JButton btnTan = new JButton("tan");
+		btnTan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				numberFunction("tan(");
+			}
+		});
 		panel.add(btnTan);
 		btnTan.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		panel.add(btnEqual,c);

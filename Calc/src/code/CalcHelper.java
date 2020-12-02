@@ -16,21 +16,24 @@ public class CalcHelper {
 	static String MODULS = "%";
 	static String O_PARA = "(";
 	static String C_PARA = ")";
+	static String SIN = "sin";
+	static String COS = "cos";
+	static String TAN = "tan";
 	static String POWER = "^";
 	// -------Operators end
 
-	static Pattern TOKEN_PATTERN = Pattern.compile("-?\\d*\\.\\d+|-?\\d+\\.\\d*|-?\\d+|[^A-Za-z0-9\\w\\s]");
+	static Pattern TOKEN_PATTERN = Pattern.compile("-?\\d*\\.\\d+|-?\\d+\\.\\d*|-?\\d+|sin|cos|tan|[^A-Za-z0-9\\w\\s]");
 	static Pattern NUMERIC_PATTERN = Pattern.compile("-?\\d*\\.\\d+|-?\\d+\\.\\d*|-?\\d+");
-	static Pattern OPERATOR_PATTERN = Pattern.compile("-?\\d*\\.\\d+|-?\\d+\\.\\d*|-?\\d+|[^A-Za-z0-9\\w\\s]");
+	static Pattern OPERATOR_PATTERN = Pattern.compile("sin|cos|tan|[^A-Za-z0-9\\w\\s]");
 
 	public static void main(String[] args) {
-		CalcHelper helper = new CalcHelper();
+//		CalcHelper helper = new CalcHelper();
 //		ArrayList<String> tokens = helper.tokens("2+2*3+2-2*2/2");
 //		System.out.println(tokens);
 //		tokens= helper.infix_to_postfix(tokens);
 //		System.out.println(tokens);
 //		System.out.println(helper.calculatePostFix(tokens));
-		System.out.println(helper.calc("2+2*2/2"));
+//		System.out.println(helper.calc("(2+3*4)"));
 	}
 
 	public double calc(String input) {
@@ -47,6 +50,7 @@ public class CalcHelper {
 			String str = matcher.group();
 			if (parent != null && isNum(parent) && isNum(str)) {
 				double c = Double.parseDouble(str);
+				// We are treating 3-4 as 3 + -4
 				if (c < 0)
 					arr.add("+");
 			}
@@ -56,36 +60,6 @@ public class CalcHelper {
 		return arr;
 	}
 
-       // -------scientific calculator start
-       // ------- 1. user input a number( Or the result of several other calculations)  2.click sin,cos,tan,log will get a result
-    public static Double sinCal(String input) throws Exception {
-        if (!TOKEN_PATTERN.matcher(input).matches()) {
-            throw new Exception("illegal number");
-        }
-        return Math.sin(Double.parseDouble(input));
-    }
-
-    public static Double cosCal(String input) throws Exception {
-        if (!TOKEN_PATTERN.matcher(input).matches()) {
-            throw new Exception("illegal number");
-        }
-        return Math.cos(Double.parseDouble(input));
-    }
-
-    public static Double tancal(String input) throws Exception {
-        if (!TOKEN_PATTERN.matcher(input).matches()) {
-            throw new Exception("illegal number");
-        }
-        return Math.tan(Double.parseDouble(input));
-    }
-
-    public static Double logcal(String input) throws Exception {
-        if (!TOKEN_PATTERN.matcher(input).matches()) {
-            throw new Exception("illegal number");
-        }
-        return Math.log(Double.parseDouble(input));
-    }
-       // -------scientific calculator end
 	public ArrayList<String> infix_to_postfix(ArrayList<String> inputArray) {
 		ArrayList<String> out = new ArrayList<String>();
 		Stack<String> operStack = new Stack<String>();
@@ -112,6 +86,10 @@ public class CalcHelper {
 	public void pushOper(Stack<String> stk, String oper, ArrayList<String> out) {
 		int priority_current = priority(oper);
 		if (stk.isEmpty() || O_PARA.contentEquals(oper) || stk.peek().contentEquals(O_PARA)) {
+			if (C_PARA.contentEquals(oper)) {
+				stk.pop();
+				return;
+			}
 			stk.push(oper);
 			return;
 		}
@@ -139,8 +117,13 @@ public class CalcHelper {
 				stack.push(Double.parseDouble(string));
 			else {
 				double num2 = stack.pop();
-				double num1 = stack.pop();
-				stack.push(operation(num1, num2, string));
+				if (string.contentEquals(SIN) || string.contentEquals(COS) || string.contentEquals(TAN)) {
+					num2 = (num2 * Math.PI) / 180.0;
+					stack.push(operation(0.0, num2, string));
+				} else {
+					double num1 = stack.pop();
+					stack.push(operation(num1, num2, string));
+				}
 			}
 		}
 		return stack.pop();
@@ -152,8 +135,10 @@ public class CalcHelper {
 		if (DIV.contentEquals(oper) || MODULS.contentEquals(oper) || MULT_1.contentEquals(oper)
 				|| MULT_2.contentEquals(oper))
 			return 2;
-		if (POWER.contentEquals(oper))
+		if (SIN.contentEquals(oper) || COS.contentEquals(oper) || TAN.contentEquals(oper))
 			return 3;
+		if (POWER.contentEquals(oper))
+			return 4;
 		return 0;
 	}
 
@@ -170,6 +155,12 @@ public class CalcHelper {
 			return num1 % num2;
 		if (POWER.contentEquals(oper))
 			return Math.pow(num1, num2);
+		if (SIN.contentEquals(oper))
+			return Math.sin(num2);
+		if (COS.contentEquals(oper))
+			return Math.cos(num2);
+		if (TAN.contentEquals(oper))
+			return Math.tan(num2);
 
 		return 0;
 	}
