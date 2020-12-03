@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import java.awt.GridLayout;
 import java.awt.Insets;
 
@@ -33,12 +35,13 @@ public class Gui {
 	private double answer,history;
 	private String number,screenNumber;
 	private JPanel panel_1,panel;
-	private JLabel lblOutput,lblHistory;
+	private JLabel lblHistory;
 	private JButton btn7,btn8,btn9,btn4,btn5, btn6,btn1,btn2,btn3,btn0,btnEqual,btnDot,btnPlus,btnMinus,
 					btnMulti,btnPercent,btnBack,btnClear,btnPower,btnRightBracket,btnLeftBracket,btnDivide,btnSqrt;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 	private CalcHelper helper;
+	private JTextField lblOutput;
 	/**
 	 * Launch the application.
 	 */
@@ -74,7 +77,6 @@ public class Gui {
 		frame.setIconImage(null);
 		frame.getContentPane().setLayout(null);
 		frame.getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
-		frame.setFocusableWindowState(false);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setBackground(new Color(240, 248, 255) );
 		
@@ -84,19 +86,9 @@ public class Gui {
 		panel_1.setLayout(null);
 		panel_1.setBackground(new Color(240, 248, 255));
 		
-		lblOutput = new JLabel("0");
-		lblOutput.setFont(new Font("Arial", Font.PLAIN, 16));
-		lblOutput.setEnabled(false);
-		lblOutput.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblOutput.setBounds(22, 165, 474, 55);
-		lblOutput.setOpaque(true);
-		lblOutput.setBackground(Color.WHITE);	
-		lblOutput.setBorder(new EmptyBorder(10,10,10,10));
-		panel_1.add(lblOutput);
-		
 		lblHistory = new JLabel("<html>History");
 		lblHistory.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblHistory.setBounds(22, 28, 474, 136);
+		lblHistory.setBounds(22, 26, 474, 136);
 		lblHistory.setEnabled(false);
 		lblHistory.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblHistory.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -104,6 +96,11 @@ public class Gui {
 		lblHistory.setBackground(new Color(240, 248, 255));	
 		lblHistory.setBorder(new EmptyBorder(10,10,10,10));
 		panel_1.add(lblHistory);		
+		
+		lblOutput = new JTextField();
+		lblOutput.setBounds(12, 189, 484, 32);
+		panel_1.add(lblOutput);
+		lblOutput.setColumns(10);
 		
 		panel = new JPanel();
 		panel.setBounds(0, 232, 516, 227);
@@ -382,7 +379,13 @@ public class Gui {
 			public void actionPerformed(ActionEvent e) {
 				String input= lblOutput.getText();
 				lblHistory.setText(lblHistory.getText()+"<br>"+input);
-				lblOutput.setText(""+helper.calc(input));
+				try
+				{
+				  lblOutput.setText(""+helper.calc(input));
+				}
+				catch (Exception e1) {
+					lblOutput.setText(e1.getMessage());
+				}
 			}
 		});
 		
@@ -497,5 +500,4 @@ public class Gui {
 		}
 		
 	}
-	
 }

@@ -33,15 +33,21 @@ public class CalcHelper {
 //		tokens= helper.infix_to_postfix(tokens);
 //		System.out.println(tokens);
 //		System.out.println(helper.calculatePostFix(tokens));
-		System.out.println(helper.calc("sin(90)"));
-		System.out.println(helper.calc("cos(90)"));
+	//	System.out.println(helper.calc("2*2*(4+5)"));
 	}
 
-	public double calc(String input) {
+	public double calc(String input) throws InvalidExpression {
+		
 		ArrayList<String> tokens = tokens(input);
-		ArrayList<String> postFix = infix_to_postfix(tokens);
-		double result=  calculatePostFix(postFix);
-		return Math.round(result*100)/100;
+		double result= 0;
+		try {
+			ArrayList<String> postFix = infix_to_postfix(tokens);
+			result=  calculatePostFix(postFix);
+		}
+		catch (Exception e) {
+			throw new InvalidExpression();
+		}
+		return Math.round(result*100)/100.0;
 	}
 
 	public ArrayList<String> tokens(String input) {
