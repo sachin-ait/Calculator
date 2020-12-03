@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CalcHelper {
-
+	public CalcHelper() {}
 	// Operators
 	static String PLUS = "+";
 	static String MINUS = "-";
