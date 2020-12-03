@@ -27,19 +27,21 @@ public class CalcHelper {
 	static Pattern OPERATOR_PATTERN = Pattern.compile("sin|cos|tan|[^A-Za-z0-9\\w\\s]");
 
 	public static void main(String[] args) {
-//		CalcHelper helper = new CalcHelper();
+		CalcHelper helper = new CalcHelper();
 //		ArrayList<String> tokens = helper.tokens("2+2*3+2-2*2/2");
 //		System.out.println(tokens);
 //		tokens= helper.infix_to_postfix(tokens);
 //		System.out.println(tokens);
 //		System.out.println(helper.calculatePostFix(tokens));
-//		System.out.println(helper.calc("(2+3*4)"));
+		System.out.println(helper.calc("sin(90)"));
+		System.out.println(helper.calc("cos(90)"));
 	}
 
 	public double calc(String input) {
 		ArrayList<String> tokens = tokens(input);
 		ArrayList<String> postFix = infix_to_postfix(tokens);
-		return calculatePostFix(postFix);
+		double result=  calculatePostFix(postFix);
+		return Math.round(result*100)/100;
 	}
 
 	public ArrayList<String> tokens(String input) {
@@ -118,8 +120,7 @@ public class CalcHelper {
 			else {
 				double num2 = stack.pop();
 				if (string.contentEquals(SIN) || string.contentEquals(COS) || string.contentEquals(TAN)) {
-					num2 = (num2 * Math.PI) / 180.0;
-					stack.push(operation(0.0, num2, string));
+					stack.push(operation(0.0, Math.toRadians(num2), string));
 				} else {
 					double num1 = stack.pop();
 					stack.push(operation(num1, num2, string));
