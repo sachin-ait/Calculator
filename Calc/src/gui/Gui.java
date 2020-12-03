@@ -33,7 +33,7 @@ public class Gui {
 	private double answer,history;
 	private String number,screenNumber;
 	private JPanel panel_1,panel;
-	private JLabel lblNewLabel,lblHistory;
+	private JLabel lblOutput,lblHistory;
 	private JButton btn7,btn8,btn9,btn4,btn5, btn6,btn1,btn2,btn3,btn0,btnEqual,btnDot,btnPlus,btnMinus,
 					btnMulti,btnPercent,btnBack,btnClear,btnPower,btnRightBracket,btnLeftBracket,btnDivide,btnSqrt;
 	private JButton btnNewButton;
@@ -84,17 +84,17 @@ public class Gui {
 		panel_1.setLayout(null);
 		panel_1.setBackground(new Color(240, 248, 255));
 		
-		lblNewLabel = new JLabel("0");
-		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-		lblNewLabel.setEnabled(false);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setBounds(22, 165, 474, 55);
-		lblNewLabel.setOpaque(true);
-		lblNewLabel.setBackground(Color.WHITE);	
-		lblNewLabel.setBorder(new EmptyBorder(10,10,10,10));
-		panel_1.add(lblNewLabel);
+		lblOutput = new JLabel("0");
+		lblOutput.setFont(new Font("Arial", Font.PLAIN, 16));
+		lblOutput.setEnabled(false);
+		lblOutput.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblOutput.setBounds(22, 165, 474, 55);
+		lblOutput.setOpaque(true);
+		lblOutput.setBackground(Color.WHITE);	
+		lblOutput.setBorder(new EmptyBorder(10,10,10,10));
+		panel_1.add(lblOutput);
 		
-		lblHistory = new JLabel("History");
+		lblHistory = new JLabel("<html>History");
 		lblHistory.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		lblHistory.setBounds(22, 28, 474, 136);
 		lblHistory.setEnabled(false);
@@ -351,12 +351,12 @@ public class Gui {
 		btnDot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				number = lblNewLabel.getText();
+				number = lblOutput.getText();
 				if(number.contains(".")) {
 					
 				}else {
 					screenNumber = number+".";
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 				}	
 				
 			}
@@ -380,8 +380,9 @@ public class Gui {
 		 btnEqual.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnEqual.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String input= lblNewLabel.getText();
-				lblNewLabel.setText(""+helper.calc(input));
+				String input= lblOutput.getText();
+				lblHistory.setText(lblHistory.getText()+"<br>"+input);
+				lblOutput.setText(""+helper.calc(input));
 			}
 		});
 		
@@ -408,45 +409,45 @@ public class Gui {
 	}
 	private void numberFunction(String a) {				
 		
-		if(lblNewLabel.getText().equals("0")) {
+		if(lblOutput.getText().equals("0")) {
 			screenNumber = a;
-			lblNewLabel.setText(screenNumber);
+			lblOutput.setText(screenNumber);
 			
 		}else {
 				switch(a) {
 				case "+":
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					screenNumber = number+a;
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 					
 				    break;
 				case "-":
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					screenNumber = number+a;
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 				    break;
 				case "*":
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					screenNumber = number+a;
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 				    break;
 				case "/":
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					screenNumber = number+a;
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 				    break;
 				    
 				case "<":
 					try {
-						number = lblNewLabel.getText();
+						number = lblOutput.getText();
 						screenNumber = number.substring(0, number.length() - 1);
-						lblNewLabel.setText(screenNumber);						
+						lblOutput.setText(screenNumber);						
 					}catch(Exception ex) {						
 					}
 				    break;
 				    
 				case "C":
-					lblNewLabel.setText("");
+					lblOutput.setText("");
 				    break;				   				   
 				    
 				case "\u221A":
@@ -454,43 +455,43 @@ public class Gui {
 				    break;
 				    
 				case "%":
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					screenNumber = number+a;
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 				    break;
 				case "^":
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					screenNumber = number+a;
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 				    break;
 				case "(":
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					screenNumber = number+a;
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 				    break;
 				case ")":
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					screenNumber = number+a;
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 				    break;
 				case "=":
 					
 				    break;
 				    
 				case "0":
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					if(number.equals("")) {
 						
 					}else {
 						screenNumber = number+0;
-						lblNewLabel.setText(screenNumber);
+						lblOutput.setText(screenNumber);
 					}
 					break;
 					
 				default:
-					number = lblNewLabel.getText();
+					number = lblOutput.getText();
 					screenNumber = number+a;
-					lblNewLabel.setText(screenNumber);
+					lblOutput.setText(screenNumber);
 				
 			}
 		}
